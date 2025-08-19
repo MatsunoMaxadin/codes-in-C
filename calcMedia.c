@@ -30,9 +30,9 @@ int main() {
       arrNumbers++;
   };
   
-  media = total/x;
+  media = (double)total/x;
   
-  printf("A média dos números foi: %f, o total foi %d e a quantidade foi %d", media, total, x);
+  printf("A média dos números foi: %.2f, o total foi %d e a quantidade foi %d", media, total, x);
   
     return 0;
 }
