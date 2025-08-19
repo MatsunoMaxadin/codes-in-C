@@ -1,4 +1,4 @@
- #include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 typedef struct FUNCTIONARY {
@@ -7,16 +7,22 @@ typedef struct FUNCTIONARY {
     struct FUNCTIONARY *nextFunc;
 } functionary;
 
-functionary* createList (functionary *ptr, int age, float salary, int memory){
-    ptr = NULL;
-    ptr = (functionary *) realloc(ptr, memory);
+functionary* createList (functionary func, int age, float salary, int memory){
+    func.nextFunc = (functionary *) realloc(func.nextFunc, memory);
     
-    ptr->age = age;
-    ptr->salary = salary;
+    func.nextFunc->age = age;
+    func.nextFunc->salary = salary;
+    func.nextFunc->nextFunc = NULL;
     
-    return ptr;
+    return func.nextFunc;
 
 };
+
+void printFunctionary (functionary func){
+    
+    printf("Idade: %d, Salário: %.2f, próximo: %d\n", func.age, func.salary, func.nextFunc);
+    
+}
 
 int main(void){
     
@@ -24,17 +30,29 @@ int main(void){
     //Maxine.name[] = "Maxine";
     Maxine.age = 18;
     Maxine.salary = 1200.0;
+    Maxine.nextFunc = NULL;
     int tamanho = sizeof(functionary);
     
-    printf(" Idade: %d, Salário: %f \n", Maxine.age, Maxine.salary);
+    printFunctionary(Maxine);
     
     
-   Maxine.nextFunc = createList(Maxine.nextFunc, 19, 200.15, tamanho);
+   Maxine.nextFunc = createList(Maxine, 19, 200.15, tamanho);
     
-    printf("Idade: %d, Salário: %f", Maxine.nextFunc->age, Maxine.nextFunc->salary);
+    functionary* newFunctionary = Maxine.nextFunc;
+    
+    printFunctionary(*newFunctionary);
+    
+    newFunctionary->nextFunc = createList(*newFunctionary, 21, 530.230, tamanho);
+    
+    functionary* newFunctionaryTwo = newFunctionary->nextFunc;
+    
+    printFunctionary(*newFunctionaryTwo);
+    
+    
+    
     
     return 0;
     
 
 
-} 
+}
