@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 typedef struct FUNCTIONARY {
     int age;
     float salary;
     struct FUNCTIONARY *nextFunc;
 } functionary;
 
-functionary* createList (functionary func, int age, float salary, int memory){
-    func.nextFunc = (functionary *) realloc(func.nextFunc, memory);
+functionary* createList (functionary func, int age, float salary){
+    func.nextFunc = (functionary *) realloc(func.nextFunc, sizeof(functionary));
     
     func.nextFunc->age = age;
     func.nextFunc->salary = salary;
@@ -26,33 +27,25 @@ void printFunctionary (functionary func){
 
 int main(void){
     
-    functionary Maxine;
-    //Maxine.name[] = "Maxine";
-    Maxine.age = 18;
-    Maxine.salary = 1200.0;
-    Maxine.nextFunc = NULL;
-    int tamanho = sizeof(functionary);
+    const int FunctionarySize = sizeof(functionary);
+    functionary *LISTA = (functionary *) malloc(FunctionarySize);
+    LISTA->nextFunc = createList(*LISTA, 18, 1200.0);
     
-    printFunctionary(Maxine);
+    functionary* Maxine = LISTA->nextFunc;
     
+    printFunctionary(*Maxine);
     
-   Maxine.nextFunc = createList(Maxine, 19, 200.15, tamanho);
+   Maxine->nextFunc = createList(*Maxine, 19, 200.15);
     
-    functionary* newFunctionary = Maxine.nextFunc;
+    functionary* newFunctionary = Maxine->nextFunc;
     
     printFunctionary(*newFunctionary);
     
-    newFunctionary->nextFunc = createList(*newFunctionary, 21, 530.230, tamanho);
+    newFunctionary->nextFunc = createList(*newFunctionary, 21, 530.230);
     
     functionary* newFunctionaryTwo = newFunctionary->nextFunc;
     
     printFunctionary(*newFunctionaryTwo);
-    
-    
-    
-    
+
     return 0;
-    
-
-
 }
